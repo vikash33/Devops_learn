@@ -1,4 +1,40 @@
-Learn today with this repo https://github.com/LondheShubham153/90DaysOfDevOps.git 
-Docker fundamental 
-Docker build , run , network , volume , bind , multistage,etc
-tomorrow will share all the files with examples.
+How to deploy python basic app using docker:
+
+
+
+
+
+g2016ccvikash4924@instance-1:~/flask-app$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                 NAMES
+956a76fa130c   mysql:latest   "docker-entrypoint.s…"   50 minutes ago   Up 50 minutes   3306/tcp, 33060/tcp   inspiring_meitner
+g2016ccvikash4924@instance-1:~/flask-app$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+flask-app    latest    108603007d03   13 seconds ago   1.01GB
+python       3.9       deede88fe275   3 weeks ago      997MB
+mysql        latest    99afc808f15b   5 weeks ago      577MB
+g2016ccvikash4924@instance-1:~/flask-app$ docker run -d -p 5000:5000 flask-app 
+82e920515d58db635fbe24a87eab43cacdd882e9500d1cbd5d59ab29bdc6853e
+g2016ccvikash4924@instance-1:~/flask-app$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                    NAMES
+82e920515d58   flask-app      "python app.py"          4 seconds ago    Up 3 seconds    0.0.0.0:5000->5000/tcp   xenodochial_chaum
+956a76fa130c   mysql:latest   "docker-entrypoint.s…"   50 minutes ago   Up 50 minutes   3306/tcp, 33060/tcp      inspiring_meitner
+g2016ccvikash4924@instance-1:~/flask-app$ ls
+Dockerfile  app.py
+g2016ccvikash4924@instance-1:~/flask-app$ cat Dockerfile 
+From python:3.9
+WORKDIR app/
+COPY app.py .
+RUN pip install Flask
+CMD ["python", "app.py"]
+g2016ccvikash4924@instance-1:~/flask-app$ cat app.py 
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello, Dosto congratualtion you have cleared 1st devops stage'
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+g2016ccvikash4924@instance-1:~/flask-app$ 
